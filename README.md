@@ -161,9 +161,9 @@ if __name__ == '__main__':
 </html
 ```
 
-<img width="40%" src="https://user-images.githubusercontent.com/84302953/168939761-5d0a0cef-d83d-42d5-9143-13b6810c63db.png](https://github.com/khdbsfdk/flask-image/assets/84302953/e7306a16-3c7a-47a0-a00f-a2b1b0004f8a"/>
+<img width="40%" src="[https://user-images.githubusercontent.com/84302953/168939761-5d0a0cef-d83d-42d5-9143-13b6810c63db.png](https://github.com/khdbsfdk/flask-image/assets/84302953/e7306a16-3c7a-47a0-a00f-a2b1b0004f8a](https://github-production-user-asset-6210df.s3.amazonaws.com/84302953/241175156-e7306a16-3c7a-47a0-a00f-a2b1b0004f8a.png)"/>
 
-<img width="40%" src="https://user-images.githubusercontent.com/84302953/168939761-5d0a0cef-d83d-42d5-9143-13b6810c63db.png](https://github.com/khdbsfdk/flask-image/assets/84302953/e7306a16-3c7a-47a0-a00f-a2b1b0004f8a](https://github.com/khdbsfdk/flask-image/assets/84302953/6e86cc29-f3ee-4d53-a433-c54e5521f8d6"/>
+<img width="40%" src="[https://user-images.githubusercontent.com/84302953/168939761-5d0a0cef-d83d-42d5-9143-13b6810c63db.png](https://github.com/khdbsfdk/flask-image/assets/84302953/e7306a16-3c7a-47a0-a00f-a2b1b0004f8a](https://github.com/khdbsfdk/flask-image/assets/84302953/6e86cc29-f3ee-4d53-a433-c54e5521f8d6](https://github.com/khdbsfdk/flask-image/assets/84302953/6e86cc29-f3ee-4d53-a433-c54e5521f8d6)"/>
 
 # 개선 필요 부분
 - 데이터의 특성 파악 후 적절한 전처리 코드 추가 필요
