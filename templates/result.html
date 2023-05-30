@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Result Page</title>
+  </head>
+  <body>
+    <h1>기계학습 분석 결과</h1>
+    <p>예측 정확도는 약 {{ score }}% 입니다.</p>
+    
+    <!-- 데이터프레임을 표로 표시 -->
+    <p>전처리 후 데이터프레임은 아래와 같습니다.</p>
+    {{ table|safe }}
+  </body>
+</html
