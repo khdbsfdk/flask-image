@@ -3,11 +3,13 @@
 ---
 # 차례
 - [프로젝트 개요](https://github.com/khdbsfdk/Chatbot-Doll/blob/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94)
-- [프로젝트 수행 절차](https://github.com/khdbsfdk/Chatbot-Doll/blob/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%88%98%ED%96%89-%EC%A0%88%EC%B0%A8---%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C)
-  - [안드로이드](https://github.com/khdbsfdk/Chatbot-Doll/blob/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%88%98%ED%96%89-%EC%A0%88%EC%B0%A8---%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C)
-  - [챗봇](https://github.com/khdbsfdk/Chatbot-Doll/blob/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%88%98%ED%96%89-%EC%A0%88%EC%B0%A8---%EC%B1%97%EB%B4%87)
-  - [데이터 베이스](https://github.com/khdbsfdk/Chatbot-Doll/blob/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%88%98%ED%96%89-%EC%A0%88%EC%B0%A8---%ED%8C%8C%EC%9D%B4%EC%96%B4-%EB%B2%A0%EC%9D%B4%EC%8A%A4)
-- [개선 사항 및 참고 사이트](https://github.com/khdbsfdk/Chatbot-Doll/blob/main/README.md#%EA%B0%9C%EC%84%A0-%ED%95%A0-%EC%82%AC%ED%95%AD)
+- [프로젝트 내 Tool](https://github.com/khdbsfdk/Chatbot-Doll/blob/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%88%98%ED%96%89-%EC%A0%88%EC%B0%A8---%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C)
+- [app.py](https://github.com/khdbsfdk/Chatbot-Doll/blob/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%88%98%ED%96%89-%EC%A0%88%EC%B0%A8---%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C)
+- [index.html](https://github.com/khdbsfdk/Chatbot-Doll/blob/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%88%98%ED%96%89-%EC%A0%88%EC%B0%A8---%EC%B1%97%EB%B4%87)
+- [result.html](https://github.com/khdbsfdk/Chatbot-Doll/blob/main/README.md#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%88%98%ED%96%89-%EC%A0%88%EC%B0%A8---%ED%8C%8C%EC%9D%B4%EC%96%B4-%EB%B2%A0%EC%9D%B4%EC%8A%A4)
+- [Dockerfile]()
+- [
+- [개선 필요 부분](https://github.com/khdbsfdk/Chatbot-Doll/blob/main/README.md#%EA%B0%9C%EC%84%A0-%ED%95%A0-%EC%82%AC%ED%95%AD)
 ---
 # 프로젝트 개요
 ### (1)프로젝트 구현 내용
@@ -160,6 +162,39 @@ if __name__ == '__main__':
   </body>
 </html
 ```
+
+# Dockerfile
+''' python
+# Base 이미지 설정
+FROM python:3.9-slim
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# 필요한 파일 복사
+COPY requirements.txt .
+
+# 필요한 패키지 설치
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 애플리케이션 파일 복사
+COPY . .
+
+# Flask 애플리케이션 실행
+CMD [ "python", "app.py" ]
+'''
+
+# requirements.txt
+''' python
+Flask
+pandas
+scikit-learn
+'''
+
+''' python
+docker build -t flask-web-image .
+docker run -p 5000:5000 flask-web-image
+'''
 
 <img width="40%" src="[https://user-images.githubusercontent.com/84302953/168939761-5d0a0cef-d83d-42d5-9143-13b6810c63db.png](https://github.com/khdbsfdk/flask-image/assets/84302953/e7306a16-3c7a-47a0-a00f-a2b1b0004f8a](https://github-production-user-asset-6210df.s3.amazonaws.com/84302953/241175156-e7306a16-3c7a-47a0-a00f-a2b1b0004f8a.png)"/>
 
