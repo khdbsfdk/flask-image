@@ -116,9 +116,6 @@ def index():
             # 데이터프레임 생성 및 기계 학습 모델 훈련
             score, html_table = process_data(file)
             
-            # 예측 결과
-            # prediction = "모델 훈련 및 예측 완료"
-            
             return render_template('result.html', score=score, table=html_table)
     
     return render_template('index.html')
