@@ -38,7 +38,7 @@
 # app.py
 
 ``` python
-pip install flask pandas sklearn
+pip install flask pandas scikit-learn
 ```
 ``` python
 from flask import Flask, render_template, request
