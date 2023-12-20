@@ -41,16 +41,20 @@
 pip install flask pandas scikit-learn
 ```
 ``` python
-from flask import Flask, render_template, request
+import joblib
 import sklearn
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import LabelEncoder
-from sklearn.metrics         import accuracy_score
+from flask                      import Flask, render_template, request, send_file
+from sklearn.ensemble           import RandomForestClassifier
+from sklearn.model_selection    import train_test_split
+from sklearn.linear_model       import LogisticRegression
+from sklearn.preprocessing      import LabelEncoder
+from sklearn.metrics            import accuracy_score
 
 app = Flask(__name__)
+
+# 전역 변수로 모델 정의
+model = None
 
 # 데이터프레임을 생성하고 기계 학습 모델을 훈련하는 함수
 def process_data(file):
@@ -91,6 +95,7 @@ def process_data(file):
                                                     random_state=43)
     
     # 모델 학습
+    global model
     model = LogisticRegression()
     model.fit(x_train, y_train)
 
@@ -100,9 +105,23 @@ def process_data(file):
     #모델의 정확도 출력
     score = round(accuracy_score(y_test, predictions), 2)
     score = score * 100
-    # print("예측 정확도는 약 {0}% 입니다.".format(score))
     
     return score, html_table
+
+# 모델 다운로드 라우트
+@app.route('/download_model', methods=['GET'])
+def download_model():
+    global model
+    
+    # 모델이 없으면 404 에러 반환
+    if model is None:
+        return "Model not found", 404
+    
+    # 모델을 파일로 저장
+    joblib.dump(model, 'AutoML_model.pkl')
+    
+    # 파일 다운로드
+    return send_file('AutoML_model.pkl', as_attachment=True, download_name='AutoML_model.pkl')
 
 # Flask root 페이지
 @app.route('/', methods=['GET', 'POST'])
@@ -148,16 +167,40 @@ if __name__ == '__main__':
 <html>
   <head>
     <title>Result Page</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .result-container {
+        text-align: left;
+        max-width: 800px; /* 원하는 최대 너비로 조정 */
+        margin: 0 auto; /* 가운데 정렬 */
+      }
+      .download-btn {
+        margin-top: 10px;
+      }
+    </style>
   </head>
   <body>
-    <h1>기계학습 분석 결과</h1>
-    <p>예측 정확도는 약 {{ score }}% 입니다.</p>
-    
-    <!-- 데이터프레임을 표로 표시 -->
-    <p>전처리 후 데이터프레임은 아래와 같습니다.</p>
-    {{ table|safe }}
+    <div class="result-container">
+      <h1>기계학습 분석 결과</h1>
+      <p>예측 정확도는 약 {{ score }}% 입니다.</p>
+
+      <!-- 데이터프레임을 표로 표시 -->
+      <p>전처리 후 데이터프레임은 아래와 같습니다.</p>
+      {{ table|safe }}
+    </div>
+
+    <div class="result-container download-btn">
+      <h1>Model Download</h1>
+
+      <!-- 모델 다운로드 링크 -->
+      <a href="{{ url_for('download_model') }}" download>Download Model</a>
+    </div>
   </body>
-</html
+</html>
 ```
 ---
 # Dockerfile
@@ -186,6 +229,7 @@ CMD [ "python", "app.py" ]
 Flask
 pandas
 scikit-learn
+joblib
 ```
 
 ``` python
@@ -193,10 +237,20 @@ docker build -t flask-web-image .
 docker run -p 5000:5000 flask-web-image
 ```
 
+# 디렉토리 구조
+``` python
+flask-automl/
+├── app.py
+├── Dockerfile
+├── requirements.txt
+└── templates/
+    └── index.html
+```
 <img width="40%" src="[https://user-images.githubusercontent.com/84302953/168939761-5d0a0cef-d83d-42d5-9143-13b6810c63db.png](https://github.com/khdbsfdk/flask-image/assets/84302953/e7306a16-3c7a-47a0-a00f-a2b1b0004f8a](https://github-production-user-asset-6210df.s3.amazonaws.com/84302953/241175156-e7306a16-3c7a-47a0-a00f-a2b1b0004f8a.png)"/>
 
 <img width="40%" src="[https://user-images.githubusercontent.com/84302953/168939761-5d0a0cef-d83d-42d5-9143-13b6810c63db.png](https://github.com/khdbsfdk/flask-image/assets/84302953/e7306a16-3c7a-47a0-a00f-a2b1b0004f8a](https://github.com/khdbsfdk/flask-image/assets/84302953/6e86cc29-f3ee-4d53-a433-c54e5521f8d6](https://github.com/khdbsfdk/flask-image/assets/84302953/6e86cc29-f3ee-4d53-a433-c54e5521f8d6)"/>
 
 # 개선 필요 부분
 - 데이터의 특성 파악 후 적절한 전처리 코드 추가 필요
-- HTML 수정으로 시인성 개선 필요 
+- HTML 수정으로 시인성 개선 필요
+- 모델 저장 기능 추가 -> 23.12.20 추가
